@@ -2,9 +2,21 @@ import styles from "./homepage.module.css";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useState } from "react";
+import Register from "../UnauthorisedControls/Register";
+import Login from "../UnauthorisedControls/Login";
+import Search from "../UnauthorisedControls/Search";
+import {
+  unAuthorizedControlComponent,
+  unAuthorizedControlKey,
+} from "../UnauthorisedControls/unauthorizedControl.types";
 
 const Homepage = () => {
-  const [view, setView] = useState("search");
+  const [view, setView] = useState<unAuthorizedControlKey>("search");
+  const viewComponent: unAuthorizedControlComponent = {
+    register: <Register />,
+    login: <Login />,
+    search: <Search />,
+  };
 
   return (
     <div>
@@ -40,6 +52,7 @@ const Homepage = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+      {viewComponent[view]}
     </div>
   );
 };
