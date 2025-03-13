@@ -7,3 +7,9 @@ export type unAuthorizedControlComponent = {
 };
 
 export type unAuthorizedControlKey = "register" | "search" | "login";
+
+export type ArtistListDetails = {
+  id: string;
+  title: string;
+  image: string;
+};
