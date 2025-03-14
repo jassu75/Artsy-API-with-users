@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon server.js",
+    "server": "nodemon Server/server.js",
     "client": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

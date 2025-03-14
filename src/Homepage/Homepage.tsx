@@ -6,13 +6,13 @@ import Register from "../UnauthorisedControls/Register";
 import Login from "../UnauthorisedControls/Login";
 import Search from "../UnauthorisedControls/Search";
 import {
-  unAuthorizedControlComponent,
-  unAuthorizedControlKey,
+  TypeUnAuthorizedControlComponent,
+  TypeUnAuthorizedControlKey,
 } from "../UnauthorisedControls/unauthorizedControl.types";
 
 const Homepage = () => {
-  const [view, setView] = useState<unAuthorizedControlKey>("search");
-  const viewComponent: unAuthorizedControlComponent = {
+  const [view, setView] = useState<TypeUnAuthorizedControlKey>("search");
+  const viewComponent: TypeUnAuthorizedControlComponent = {
     register: <Register />,
     login: <Login />,
     search: <Search />,

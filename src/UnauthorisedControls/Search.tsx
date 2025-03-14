@@ -37,7 +37,10 @@ const Search = () => {
               animation="border"
               variant="light"
               size="sm"
-              className="ms-2"
+              className="ms-2 pt-2"
+              as="span"
+              role="status"
+              aria-hidden="true"
             />
           ) : null}
         </Button>

@@ -1,15 +1,23 @@
 import { JSX } from "react";
 
-export type unAuthorizedControlComponent = {
+export type TypeUnAuthorizedControlComponent = {
   register: JSX.Element;
   login: JSX.Element;
   search: JSX.Element;
 };
 
-export type unAuthorizedControlKey = "register" | "search" | "login";
+export type TypeUnAuthorizedControlKey = "register" | "search" | "login";
 
-export type ArtistListDetails = {
+export type TypeArtistListDetails = {
   id: string;
   title: string;
   image: string;
+};
+
+export type TypeArtistInfo = {
+  artistName: string;
+  nationality: string;
+  birthDay: string;
+  deathDay: string;
+  biography: string;
 };

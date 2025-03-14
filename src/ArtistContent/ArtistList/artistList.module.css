@@ -34,3 +34,7 @@
   color: #ffffff;
   font-size: 15px;
 }
+
+.card_body.active {
+  background-color: #205375;
+}
