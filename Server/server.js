@@ -2,6 +2,7 @@ import express from "express";
 import { getArtsyToken } from "./MiddleWare/getArtsyToken.js";
 import { getArtistList } from "./MiddleWare/getArtistList.js";
 import { getArtistInfo } from "./MiddleWare/getArtistInfo.js";
+import { getArtWorks } from "./MiddleWare/getArtworks.js";
 const app = express();
 
 //ArtistList
@@ -20,6 +21,10 @@ app.get(
     res.json(req.artistInfo);
   }
 );
+
+app.get("/api/artworks/:artistId", getArtsyToken, getArtWorks, (req, res) => {
+  res.json(req.artWorks);
+});
 
 app.listen(5000, () => {
   console.log(`Server started successfully`);

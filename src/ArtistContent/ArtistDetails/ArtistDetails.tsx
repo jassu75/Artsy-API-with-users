@@ -1,7 +1,10 @@
 import Nav from "react-bootstrap/Nav";
 import styles from "./artistDetails.module.css";
 import { useState } from "react";
-import { TypeArtistInfo } from "../../UnauthorisedControls/unauthorizedControl.types";
+import {
+  TypeArtistInfo,
+  TypeArtworks,
+} from "../../UnauthorisedControls/unauthorizedControl.types";
 import ArtistInfo from "../ArtistInfo/ArtistInfo";
 import Artworks from "../Artworks/Artworks";
 import Spinner from "react-bootstrap/Spinner";
@@ -9,11 +12,12 @@ import Spinner from "react-bootstrap/Spinner";
 const ArtistDetails = ({
   artistInfo,
   loading,
+  artworks,
 }: {
-  artistInfo: TypeArtistInfo;
+  artistInfo: TypeArtistInfo | null;
   loading: boolean;
+  artworks: TypeArtworks | null;
 }) => {
-  console.log(artistInfo);
   const [activeTab, setActiveTab] = useState<string>("artistInfo");
 
   return (
@@ -56,11 +60,11 @@ const ArtistDetails = ({
           />
         </div>
       ) : null}
-      {!loading && activeTab == "artistInfo" ? (
+      {artistInfo && !loading && activeTab === "artistInfo" ? (
         <ArtistInfo artistInfo={artistInfo} />
-      ) : (
-        <Artworks />
-      )}
+      ) : artworks && !loading && activeTab === "artWorks" ? (
+        <Artworks artworks={artworks} />
+      ) : null}
     </div>
   );
 };

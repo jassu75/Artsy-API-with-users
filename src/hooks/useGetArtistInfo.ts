@@ -3,10 +3,10 @@ import { useState } from "react";
 import { TypeArtistInfo } from "../UnauthorisedControls/unauthorizedControl.types";
 const useGetArtistInfo = () => {
   const [artistInfo, setArtistInfo] = useState<TypeArtistInfo | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [artistInfoLoading, setArtistInfoLoading] = useState(false);
   const fetchArtistInfo = async (artistId: string | null) => {
     try {
-      setLoading(true);
+      setArtistInfoLoading(true);
       const response = await axios.get(`/api/artistinfo/${artistId}`);
       const refinedArtistInfo = {
         artistName: response.data.name || "",
@@ -18,10 +18,10 @@ const useGetArtistInfo = () => {
 
       setArtistInfo(refinedArtistInfo);
     } finally {
-      setLoading(false);
+      setArtistInfoLoading(false);
     }
   };
 
-  return { artistInfo, loading, fetchArtistInfo };
+  return { artistInfo, artistInfoLoading, fetchArtistInfo };
 };
 export default useGetArtistInfo;

@@ -19,7 +19,7 @@ const Homepage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.homepage_container}>
       <Navbar collapseOnSelect expand="lg" className={styles.homepage_navbar}>
         <Navbar.Brand>Artist Search</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

@@ -1,0 +1,25 @@
+.artwork_card {
+  width: 100%;
+}
+
+.artwork_title {
+  font-size: 11px;
+  text-align: center;
+}
+
+.artwork_body {
+  padding: 8px 8px 12px 8px;
+}
+
+.view_categories_button {
+  width: 100%;
+  background-color: #f1f1f1;
+  color: #000000;
+  font-size: 12px;
+  border: none;
+  font-weight: 500;
+}
+
+.view_categories_button:hover {
+  background-color: #004d90;
+}

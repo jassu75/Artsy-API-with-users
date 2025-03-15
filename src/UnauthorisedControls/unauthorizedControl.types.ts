@@ -21,3 +21,10 @@ export type TypeArtistInfo = {
   deathDay: string;
   biography: string;
 };
+
+export type TypeArtworks = {
+  id: string;
+  title: string;
+  date: string;
+  image: string;
+};

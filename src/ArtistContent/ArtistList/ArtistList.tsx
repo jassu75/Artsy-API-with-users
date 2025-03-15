@@ -3,8 +3,9 @@ import styles from "./artistList.module.css";
 import { TypeArtistListDetails } from "../../UnauthorisedControls/unauthorizedControl.types";
 import EmptyArtistList from "./EmptyArtistList";
 import ArtistDetails from "../ArtistDetails/ArtistDetails";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useGetArtistInfo from "../../hooks/useGetArtistInfo";
+import useGetArtworks from "../../hooks/useGetArtworks";
 
 const ArtistList = ({
   artistList,
@@ -14,11 +15,18 @@ const ArtistList = ({
   const [activeArtistCardId, setActiveArtistCardId] = useState<string | null>(
     null
   );
-  const { artistInfo, loading, fetchArtistInfo } = useGetArtistInfo();
+  const { artistInfo, artistInfoLoading, fetchArtistInfo } = useGetArtistInfo();
+  const { artworks, artworksLoading, fetchArtworks } = useGetArtworks();
   const handleCardClick = (artistId: string) => {
     setActiveArtistCardId(artistId);
     fetchArtistInfo(artistId);
+    fetchArtworks(artistId);
   };
+
+  useEffect(() => {
+    setActiveArtistCardId(null);
+  }, [artistList]);
+
   return (
     <div className={styles.artists_list_container}>
       <div className={styles.artist_list}>
@@ -45,8 +53,12 @@ const ArtistList = ({
           <EmptyArtistList />
         )}
       </div>
-      {artistInfo ? (
-        <ArtistDetails loading={loading} artistInfo={artistInfo} />
+      {activeArtistCardId ? (
+        <ArtistDetails
+          loading={artistInfoLoading && artworksLoading}
+          artistInfo={artistInfo}
+          artworks={artworks}
+        />
       ) : null}
     </div>
   );

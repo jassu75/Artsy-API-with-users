@@ -8,7 +8,7 @@ export const getArtistList = async (req, res, next) => {
       "X-XAPP-Token": token,
     };
 
-    const url = "https://api.artsy.net/api/search?q=Andy+Warhol";
+    const url = "https://api.artsy.net/api/search";
 
     const params = {
       type: "artist",
