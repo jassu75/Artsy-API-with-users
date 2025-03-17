@@ -16,6 +16,12 @@ const Search = () => {
     fetchArtistList(artistName);
   };
 
+  const handleEnterPress = (event: any) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <Container className={styles.search_container}>
       <InputGroup>
@@ -24,6 +30,7 @@ const Search = () => {
           placeholder="Please enter an artist name"
           size="sm"
           onChange={(e) => setArtistName(e.target.value)}
+          onKeyDown={handleEnterPress}
         />
         <Button
           onClick={handleSearch}

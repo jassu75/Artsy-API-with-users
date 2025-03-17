@@ -28,3 +28,9 @@ export type TypeArtworks = {
   date: string;
   image: string;
 };
+
+export type TypeCategory = {
+  id: string;
+  title: string;
+  image: string;
+};

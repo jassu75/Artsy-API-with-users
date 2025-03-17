@@ -23,3 +23,7 @@
 .view_categories_button:hover {
   background-color: #004d90;
 }
+
+.empty_arworks_container {
+  padding-top: 20px;
+}

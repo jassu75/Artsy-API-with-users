@@ -16,7 +16,7 @@ const ArtistDetails = ({
 }: {
   artistInfo: TypeArtistInfo | null;
   loading: boolean;
-  artworks: TypeArtworks | null;
+  artworks: TypeArtworks[] | null;
 }) => {
   const [activeTab, setActiveTab] = useState<string>("artistInfo");
 

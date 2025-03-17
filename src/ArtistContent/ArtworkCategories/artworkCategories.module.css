@@ -1,0 +1,26 @@
+.category_card {
+  width: 100%;
+}
+
+.category_body {
+  padding: 8px;
+}
+
+.category_text {
+  font-size: 12px;
+  text-align: center;
+}
+
+.category_image {
+  object-fit: cover;
+}
+
+@media (min-width: 992px) {
+  .category_image {
+    height: 180px;
+  }
+}
+
+.empty_category_container {
+  padding-top: 20px;
+}

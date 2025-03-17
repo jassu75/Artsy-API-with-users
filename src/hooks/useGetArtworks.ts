@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { TypeArtworks } from "../UnauthorisedControls/unauthorizedControl.types";
 const useGetArtworks = () => {
-  const [artworks, setArtworks] = useState<TypeArtworks | null>(null);
+  const [artworks, setArtworks] = useState<TypeArtworks[] | null>(null);
   const [artworksLoading, setArtworksLoading] = useState(false);
   const fetchArtworks = async (artistId: string | null) => {
     try {
