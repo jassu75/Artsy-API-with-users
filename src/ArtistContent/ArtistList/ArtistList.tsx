@@ -4,60 +4,71 @@ import { TypeArtistListDetails } from "../../UnauthorisedControls/unauthorizedCo
 import EmptyArtistList from "./EmptyArtistList";
 import ArtistDetails from "../ArtistDetails/ArtistDetails";
 import { useEffect, useState } from "react";
-import useGetArtistInfo from "../../hooks/useGetArtistInfo";
-import useGetArtworks from "../../hooks/useGetArtworks";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ArtistList = ({
   artistList,
 }: {
-  artistList: TypeArtistListDetails[];
+  artistList: TypeArtistListDetails[] | null;
 }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParameters = new URLSearchParams(location.search);
   const [activeArtistCardId, setActiveArtistCardId] = useState<string | null>(
-    null
+    queryParameters.get("artistid")
   );
-  const { artistInfo, artistInfoLoading, fetchArtistInfo } = useGetArtistInfo();
-  const { artworks, artworksLoading, fetchArtworks } = useGetArtworks();
+  const [activeTab, setActiveTab] = useState<string>(
+    queryParameters.get("activetab") || "artistInfo"
+  );
+
   const handleCardClick = (artistId: string) => {
+    queryParameters.set("artistid", artistId);
+    queryParameters.set("activetab", "artistInfo");
+    const updatedUrl = `${location.pathname}?${queryParameters.toString()}`;
+    navigate(updatedUrl, { replace: true });
     setActiveArtistCardId(artistId);
-    fetchArtistInfo(artistId);
-    fetchArtworks(artistId);
+    setActiveTab("artistInfo");
   };
 
   useEffect(() => {
-    setActiveArtistCardId(null);
+    if (artistList) {
+      setActiveArtistCardId(null);
+    }
   }, [artistList]);
 
   return (
     <div className={styles.artists_list_container}>
       <div className={styles.artist_list}>
-        {artistList?.length !== 0 ? (
-          artistList.map((artistDetails) => (
-            <Card
-              key={artistDetails.id}
-              className={styles.artist_card}
-              onClick={() => handleCardClick(artistDetails.id)}
-            >
-              <Card.Img src={artistDetails.image} variant="top" />
-              <Card.Body
-                className={`${styles.card_body} ${
-                  artistDetails.id == activeArtistCardId ? styles.active : ""
-                }`}
+        {artistList ? (
+          artistList?.length !== 0 ? (
+            artistList.map((artistDetails) => (
+              <Card
+                key={artistDetails.id}
+                className={styles.artist_card}
+                onClick={() => handleCardClick(artistDetails.id)}
               >
-                <Card.Title className={styles.card_title}>
-                  {artistDetails.title}
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          ))
-        ) : (
-          <EmptyArtistList />
-        )}
+                <Card.Img src={artistDetails.image} variant="top" />
+                <Card.Body
+                  className={`${styles.card_body} ${
+                    artistDetails.id == activeArtistCardId ? styles.active : ""
+                  }`}
+                >
+                  <Card.Title className={styles.card_title}>
+                    {artistDetails.title}
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            ))
+          ) : (
+            <EmptyArtistList />
+          )
+        ) : null}
       </div>
       {activeArtistCardId ? (
         <ArtistDetails
-          loading={artistInfoLoading && artworksLoading}
-          artistInfo={artistInfo}
-          artworks={artworks}
+          artistId={activeArtistCardId}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
         />
       ) : null}
     </div>

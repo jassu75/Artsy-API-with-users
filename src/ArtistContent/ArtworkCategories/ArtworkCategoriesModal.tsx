@@ -17,7 +17,7 @@ const ArtworkCategoriesModal = ({
 }) => {
   const { category, loading } = useGetCategory(artworkDetails.id);
   return (
-    <Modal show={open} onHide={handleClose} size="lg" top>
+    <Modal show={open} onHide={handleClose} size="lg" centered>
       <Modal.Header closeButton>
         <div className={styles.header_comtainer}>
           <Card className={styles.arwork_info_container}>

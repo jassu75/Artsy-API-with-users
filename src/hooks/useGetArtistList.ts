@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { TypeArtistListDetails } from "../UnauthorisedControls/unauthorizedControl.types";
 const useGetArtistList = () => {
-  const [artistList, setArtistList] = useState<TypeArtistListDetails | null>(
+  const [artistList, setArtistList] = useState<TypeArtistListDetails[] | null>(
     null
   );
   const [loading, setLoading] = useState<boolean>(false);

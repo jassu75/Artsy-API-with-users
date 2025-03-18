@@ -56,9 +56,7 @@ const Search = () => {
         </Button>
       </InputGroup>
 
-      {Array.isArray(artistList) ? (
-        <ArtistList artistList={artistList} />
-      ) : null}
+      <ArtistList artistList={artistList} />
     </Container>
   );
 };
