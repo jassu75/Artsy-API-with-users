@@ -4,8 +4,16 @@
 }
 
 .navbar_button {
-  padding: 4px 15px !important;
-  font-size: 15px;
+  font-size: 13px;
+}
+
+.logout_item {
+  font-size: 13px;
+}
+
+.delete_acct_item {
+  font-size: 13px;
+  color: #ff0000;
 }
 
 .navbar_button.active {

@@ -50,7 +50,7 @@ const ArtistList = ({
                 <Card.Img src={artistDetails.image} variant="top" />
                 <Card.Body
                   className={`${styles.card_body} ${
-                    artistDetails.id == activeArtistCardId ? styles.active : ""
+                    artistDetails.id === activeArtistCardId ? styles.active : ""
                   }`}
                 >
                   <Card.Title className={styles.card_title}>

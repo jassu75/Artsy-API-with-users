@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Search from "./UnauthorisedControls/Search";
 import Login from "./UnauthorisedControls/Login";
 import Register from "./UnauthorisedControls/Register";
+import Favorites from "./AuthorisedControls/Favorites";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route index element={<Search />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="/favorites" element={<Favorites />} />
       </Route>
     </Routes>
   );

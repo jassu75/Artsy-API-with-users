@@ -1,5 +1,3 @@
-export type TypeUnAuthorizedControlKey = "register" | "search" | "login";
-
 export type TypeArtistListDetails = {
   id: string;
   title: string;
@@ -25,4 +23,25 @@ export type TypeCategory = {
   id: string;
   title: string;
   image: string;
+};
+
+export type TypeUserRegister = {
+  fullname: string;
+  email: string;
+  password: string;
+};
+
+export type TypeUserLogin = {
+  email: string;
+  password: string;
+};
+
+export type TypeError = {
+  field: string;
+  message: string;
+};
+
+export type TypeUser = {
+  fullname: string;
+  email: string;
 };

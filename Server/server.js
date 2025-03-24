@@ -4,7 +4,17 @@ import { getArtistList } from "./MiddleWare/getArtistList.js";
 import { getArtistInfo } from "./MiddleWare/getArtistInfo.js";
 import { getArtWorks } from "./MiddleWare/getArtworks.js";
 import { getCategory } from "./MiddleWare/getCategory.js";
+import "dotenv/config";
+import connectToDb from "./Database/connection.js";
+import addRegisteredUser from "./Database/addRegisteredUser.js";
+import cookieParser from "cookie-parser";
+import retrieveUsers from "./Database/retrieveUsers.js";
+import checkAuth from "./MiddleWare/checkAuth.js";
+import logout from "./MiddleWare/logout.js";
+import loginUser from "./Database/loginUser.js";
 const app = express();
+app.use(express.json());
+app.use(cookieParser());
 
 //ArtistList
 
@@ -23,14 +33,34 @@ app.get(
   }
 );
 
+//artworks
+
 app.get("/api/artworks/:artistId", getArtsyToken, getArtWorks, (req, res) => {
   res.json(req.artWorks);
 });
+
+//categories
 
 app.get("/api/category/:artworkId", getArtsyToken, getCategory, (req, res) => {
   res.json(req.category);
 });
 
-app.listen(5000, () => {
-  console.log(`Server started successfully`);
-});
+//Database connection
+
+connectToDb()
+  .then(() => {
+    app.listen(5000, () => {
+      console.log("Server started successfully");
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to connect to the database", err);
+  });
+
+app.post("/api/db/register", addRegisteredUser);
+
+app.post("/api/db/login", loginUser);
+
+app.post("/api/logout", logout);
+
+app.get("/api/checkauth", checkAuth);
