@@ -2,7 +2,7 @@ import styles from "./topBar.module.css";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useState } from "react";
-import { logout } from "../utils/handleAccount";
+import { logout, deleteAccount } from "../utils/handleAccount";
 import { TypeUser } from "../UnauthorisedControls/unauthorizedControl.types";
 import { Link, useLocation } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
@@ -62,7 +62,12 @@ const TopBar = ({
               title={user?.fullname}
               className={`${styles.navbar_button} px-3 mr-1`}
             >
-              <NavDropdown.Item className={styles.delete_acct_item}>
+              <NavDropdown.Item
+                className={styles.delete_acct_item}
+                onClick={() => {
+                  deleteAccount(user);
+                }}
+              >
                 Delete account
               </NavDropdown.Item>
               <NavDropdown.Item onClick={logout} className={styles.logout_item}>

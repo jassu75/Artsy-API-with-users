@@ -3,7 +3,7 @@ const logout = (req, res, next) => {
     httpOnly: true,
     expires: new Date(0),
   });
-  return res.json("Cookie cleared");
+  next();
 };
 
 export default logout;

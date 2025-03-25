@@ -12,6 +12,7 @@ import retrieveUsers from "./Database/retrieveUsers.js";
 import checkAuth from "./MiddleWare/checkAuth.js";
 import logout from "./MiddleWare/logout.js";
 import loginUser from "./Database/loginUser.js";
+import deleteUser from "./Database/deleteUser.js";
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -61,6 +62,12 @@ app.post("/api/db/register", addRegisteredUser);
 
 app.post("/api/db/login", loginUser);
 
-app.post("/api/logout", logout);
+app.post("/api/logout", logout, (req, res) => {
+  res.status(201).json("Cookie cleared");
+});
+
+app.post("/api/deleteaccount", deleteUser, logout, (re1, res) => {
+  res.json("Account deleted successfully");
+});
 
 app.get("/api/checkauth", checkAuth);
