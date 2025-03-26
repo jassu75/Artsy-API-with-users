@@ -36,12 +36,13 @@ export type TypeUserLogin = {
   password: string;
 };
 
+export type TypeUser = {
+  email: string;
+  fullname: string;
+  profileUrl: string;
+};
+
 export type TypeError = {
   field: string;
   message: string;
-};
-
-export type TypeUser = {
-  fullname: string;
-  email: string;
 };

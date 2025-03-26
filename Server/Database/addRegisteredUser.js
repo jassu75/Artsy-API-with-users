@@ -1,10 +1,22 @@
 import User from "./UserSchema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import crypto from "node:crypto";
+
+const gravatarImage = (email) => {
+  const refinedEmail = email.trim().toLowerCase();
+  const hashedEmail = crypto
+    .createHash("sha256")
+    .update(refinedEmail)
+    .digest("hex");
+  return `https://www.gravatar.com/avatar/${hashedEmail}`;
+};
 
 const addRegisteredUser = async (req, res, next) => {
   try {
     const { fullname, email, password } = req.body;
+    const profileUrl = gravatarImage(email);
+    console.log(profileUrl);
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -16,12 +28,18 @@ const addRegisteredUser = async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ fullname, email, password: hashedPassword });
+    const newUser = new User({
+      fullname,
+      email,
+      password: hashedPassword,
+      profileUrl,
+    });
     await newUser.save();
 
     const payload = {
       email: email,
       fullname: fullname,
+      profileUrl: profileUrl,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {

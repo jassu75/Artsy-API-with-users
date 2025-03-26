@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getArtistList = async (req, res, next) => {
   try {
-    const token = req.token;
+    const token = req.artsyToken;
     const searchText = req.params.artistName;
     const headers = {
       "X-XAPP-Token": token,

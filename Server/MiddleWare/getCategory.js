@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getCategory = async (req, res, next) => {
   const artworkId = req.params.artworkId;
-  const token = req.token;
+  const token = req.artsyToken;
   const url = "https://api.artsy.net/api/genes";
 
   const headers = {

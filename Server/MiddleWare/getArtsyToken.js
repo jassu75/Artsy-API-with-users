@@ -10,7 +10,7 @@ export const getArtsyToken = async (req, res, next) => {
 
     const response = await axios.post(url, data);
     const token = response.data.token;
-    req.token = token;
+    req.artsyToken = token;
   } catch (error) {
     console.log(error);
   }

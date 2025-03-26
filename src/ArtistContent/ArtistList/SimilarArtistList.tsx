@@ -1,36 +1,24 @@
-import Card from "react-bootstrap/Card";
-import styles from "./artistList.module.css";
+import { Card } from "react-bootstrap";
 import { TypeArtistListDetails } from "../../UnauthorisedControls/unauthorizedControl.types";
-import EmptyArtistList from "./EmptyArtistList";
-import ArtistDetails from "../ArtistDetails/ArtistDetails";
-import { useEffect, useState } from "react";
+import EmptySimilarArtistList from "./EmptySimilarArtistList";
+import styles from "./similarArtistList.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const ArtistList = ({
+const SimilarArtistList = ({
   artistList,
 }: {
-  artistList: TypeArtistListDetails[] | null;
+  artistList: TypeArtistListDetails[];
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryParameters = new URLSearchParams(location.search);
-  const [activeArtistCardId, setActiveArtistCardId] = useState<string | null>(
-    queryParameters.get("artistid")
-  );
 
   const handleCardClick = (artistId: string) => {
     queryParameters.set("artistid", artistId);
     queryParameters.set("activetab", "artistInfo");
     const updatedUrl = `${location.pathname}?${queryParameters.toString()}`;
     navigate(updatedUrl, { replace: true });
-    setActiveArtistCardId(artistId);
   };
-
-  useEffect(() => {
-    if (artistList) {
-      setActiveArtistCardId(null);
-    }
-  }, [artistList]);
 
   return (
     <div className={styles.artists_list_container}>
@@ -48,11 +36,7 @@ const ArtistList = ({
                   variant="top"
                   className={styles.card_image}
                 />
-                <Card.Body
-                  className={`${styles.card_body} ${
-                    artistDetails.id === activeArtistCardId ? styles.active : ""
-                  }`}
-                >
+                <Card.Body className={`${styles.card_body} `}>
                   <Card.Title className={styles.card_title}>
                     {artistDetails.title}
                   </Card.Title>
@@ -60,13 +44,12 @@ const ArtistList = ({
               </Card>
             ))
           ) : (
-            <EmptyArtistList />
+            <EmptySimilarArtistList />
           )
         ) : null}
       </div>
-      <ArtistDetails />
     </div>
   );
 };
 
-export default ArtistList;
+export default SimilarArtistList;

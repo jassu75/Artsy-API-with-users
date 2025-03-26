@@ -6,21 +6,24 @@ import Spinner from "react-bootstrap/Spinner";
 import { useLocation, useNavigate } from "react-router-dom";
 import useGetArtistInfo from "../../hooks/useGetArtistInfo";
 import useGetArtworks from "../../hooks/useGetArtworks";
+import useGetSimilarArtists from "../../hooks/useGetSimilarArtists";
+import SimilarArtistList from "../ArtistList/SimilarArtistList";
+import { useEffect, useState } from "react";
 
-const ArtistDetails = ({
-  artistId,
-  activeTab,
-  setActiveTab,
-}: {
-  artistId: string;
-  activeTab: string;
-  setActiveTab: React.Dispatch<React.SetStateAction<string>>;
-}) => {
+const ArtistDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryParameters = new URLSearchParams(location.search);
+  const [activeTab, setActiveTab] = useState<string>(
+    queryParameters.get("activetab") || "artistInfo"
+  );
+  const [artistId, setArtistId] = useState<string | null>(
+    queryParameters.get("artistid") || null
+  );
   const { artistInfo, artistInfoLoading } = useGetArtistInfo(artistId);
   const { artworks, artworksLoading } = useGetArtworks(artistId);
+  const { similarArtistList, similarArtistLoading } =
+    useGetSimilarArtists(artistId);
 
   const handleTabSelect = (eventKey: string | null) => {
     setActiveTab(eventKey || "artistInfo");
@@ -29,7 +32,11 @@ const ArtistDetails = ({
     navigate(updatedUrl, { replace: true });
   };
 
-  return (
+  useEffect(() => {
+    setArtistId(queryParameters.get("artistid"));
+  }, [location.search]);
+
+  return artistId ? (
     <div className={styles.artist_content_container}>
       <Nav
         className={styles.tab_container}
@@ -59,7 +66,8 @@ const ArtistDetails = ({
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      {artistInfoLoading && artworksLoading ? (
+
+      {artistInfoLoading || artworksLoading || similarArtistLoading ? (
         <div className={styles.loading_container}>
           <Spinner
             role="status"
@@ -68,18 +76,21 @@ const ArtistDetails = ({
             variant="secondary"
           />
         </div>
-      ) : null}
-      {artistInfo &&
-      !(artistInfoLoading && artworksLoading) &&
-      activeTab === "artistInfo" ? (
-        <ArtistInfo artistInfo={artistInfo} />
-      ) : artworks &&
-        !(artistInfoLoading && artworksLoading) &&
-        activeTab === "artWorks" ? (
-        <Artworks artworks={artworks} />
-      ) : null}
+      ) : (
+        <>
+          {artistInfo && activeTab === "artistInfo" && (
+            <ArtistInfo artistInfo={artistInfo} />
+          )}
+          {artworks && activeTab === "artWorks" && (
+            <Artworks artworks={artworks} />
+          )}
+          {similarArtistList && (
+            <SimilarArtistList artistList={similarArtistList} />
+          )}
+        </>
+      )}
     </div>
-  );
+  ) : null;
 };
 
 export default ArtistDetails;

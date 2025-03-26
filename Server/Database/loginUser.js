@@ -27,6 +27,7 @@ const loginUser = async (req, res, next) => {
     const payload = {
       email: existingUser.email,
       fullname: existingUser.fullname,
+      profileUrl: existingUser.profileUrl,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {

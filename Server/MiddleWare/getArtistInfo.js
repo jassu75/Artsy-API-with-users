@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getArtistInfo = async (req, res, next) => {
   const artistId = req.params.artistId;
-  const token = req.token;
+  const token = req.artsyToken;
   const url = "https://api.artsy.net/api/artists/" + artistId;
 
   const headers = {

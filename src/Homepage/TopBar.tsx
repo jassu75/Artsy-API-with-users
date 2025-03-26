@@ -6,6 +6,7 @@ import { logout, deleteAccount } from "../utils/handleAccount";
 import { TypeUser } from "../UnauthorisedControls/unauthorizedControl.types";
 import { Link, useLocation } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Profile from "./Profile";
 
 const TopBar = ({
   authenticated,
@@ -59,7 +60,7 @@ const TopBar = ({
           )}
           {authenticated ? (
             <NavDropdown
-              title={user?.fullname}
+              title={<Profile user={user} />}
               className={`${styles.navbar_button} px-3 mr-1`}
             >
               <NavDropdown.Item
