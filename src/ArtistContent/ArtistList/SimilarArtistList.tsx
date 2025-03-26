@@ -1,6 +1,5 @@
 import { Card } from "react-bootstrap";
 import { TypeArtistListDetails } from "../../UnauthorisedControls/unauthorizedControl.types";
-import EmptySimilarArtistList from "./EmptySimilarArtistList";
 import styles from "./similarArtistList.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -22,10 +21,10 @@ const SimilarArtistList = ({
 
   return (
     <div className={styles.artists_list_container}>
+      <h4 className={styles.similar_artists_heading}>Similar Artists</h4>
       <div className={styles.artist_list}>
-        {artistList ? (
-          artistList?.length !== 0 ? (
-            artistList.map((artistDetails) => (
+        {artistList && artistList.length !== 0
+          ? artistList.map((artistDetails) => (
               <Card
                 key={artistDetails.id}
                 className={styles.artist_card}
@@ -36,17 +35,14 @@ const SimilarArtistList = ({
                   variant="top"
                   className={styles.card_image}
                 />
-                <Card.Body className={`${styles.card_body} `}>
+                <Card.Body className={styles.card_body}>
                   <Card.Title className={styles.card_title}>
                     {artistDetails.title}
                   </Card.Title>
                 </Card.Body>
               </Card>
             ))
-          ) : (
-            <EmptySimilarArtistList />
-          )
-        ) : null}
+          : null}
       </div>
     </div>
   );

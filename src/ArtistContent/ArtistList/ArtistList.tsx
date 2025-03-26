@@ -29,8 +29,9 @@ const ArtistList = ({
   useEffect(() => {
     if (artistList) {
       setActiveArtistCardId(null);
+      navigate("/");
     }
-  }, [artistList]);
+  }, [artistList, navigate]);
 
   return (
     <div className={styles.artists_list_container}>

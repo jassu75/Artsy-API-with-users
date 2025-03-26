@@ -8,6 +8,12 @@
   justify-content: center;
 }
 
+.similar_artists_heading {
+  width: 100%;
+  font-weight: 550;
+  font-size: 24px;
+}
+
 .card_image {
   object-fit: cover;
   width: 100%;
