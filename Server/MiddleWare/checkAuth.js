@@ -19,6 +19,7 @@ const checkAuth = (req, res, next) => {
           fullname: payload.fullname,
           profileUrl: payload.profileUrl,
         };
+
         return next();
       }
     });

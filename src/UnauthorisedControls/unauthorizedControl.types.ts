@@ -46,3 +46,8 @@ export type TypeError = {
   field: string;
   message: string;
 };
+
+export type UserState = {
+  user: TypeUser | null;
+  favoritesList: string[] | null;
+};

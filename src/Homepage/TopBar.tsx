@@ -3,21 +3,17 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useState } from "react";
 import { logout, deleteAccount } from "../utils/handleAccount";
-import { TypeUser } from "../UnauthorisedControls/unauthorizedControl.types";
 import { Link, useLocation } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Profile from "./Profile";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
-const TopBar = ({
-  authenticated,
-  user,
-}: {
-  authenticated: boolean;
-  user: TypeUser | null;
-}) => {
+const TopBar = ({ authenticated }: { authenticated: boolean }) => {
   const location = useLocation();
   const activePath = location.pathname.split("/").filter(Boolean)[0];
   const [view, setView] = useState<string>(activePath || "search");
+  const user = useSelector((state: RootState) => state.userSlice.user);
 
   return (
     <Navbar collapseOnSelect expand="lg" className={styles.navbar}>

@@ -15,7 +15,14 @@ const useGetSimilarArtists = (artistId: string | null) => {
         if (artistId) {
           setsimilarArtistLoading(true);
           const url = `/api/similarartists/${artistId}`;
-          const response = await axios.get(url);
+          const headers = {
+            "Content-Type": "application/json",
+          };
+          const axiosOptions = {
+            withCredentials: true,
+            headers: headers,
+          };
+          const response = await axios.get(url, axiosOptions);
           console.log(response.data);
           const refinedSimilarArtists = response.data.similarArtistList.map(
             (artistInfo: any) => {

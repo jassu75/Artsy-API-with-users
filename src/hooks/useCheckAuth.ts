@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { TypeUser } from "../UnauthorisedControls/unauthorizedControl.types";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setFavoriteList, setUser } from "../redux/user.slice";
 
 const useCheckAuth = () => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<TypeUser | null>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -18,10 +19,11 @@ const useCheckAuth = () => {
           withCredentials: true,
           headers: headers,
         };
-        const url = "/api/checkauth";
+        const url = "/api/retrievefavoritelist";
         const response = await axios.get(url, axiosOptions);
         setAuthenticated(true);
-        setUser(response.data.user);
+        dispatch(setUser(response.data.user));
+        dispatch(setFavoriteList(response.data.favoritesList));
       } catch (error) {
         setAuthenticated(false);
         console.error("Authentication check failed:", error);
@@ -30,9 +32,9 @@ const useCheckAuth = () => {
       }
     };
     checkAuth();
-  }, []);
+  }, [dispatch]);
 
-  return { authenticated, user, loading };
+  return { authenticated, loading };
 };
 
 export default useCheckAuth;

@@ -16,7 +16,6 @@ const addRegisteredUser = async (req, res, next) => {
   try {
     const { fullname, email, password } = req.body;
     const profileUrl = gravatarImage(email);
-    console.log(profileUrl);
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -28,11 +27,13 @@ const addRegisteredUser = async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const favoritesList = [];
     const newUser = new User({
       fullname,
       email,
       password: hashedPassword,
       profileUrl,
+      favoritesList,
     });
     await newUser.save();
 

@@ -8,6 +8,12 @@
   justify-content: center;
 }
 
+.image_overlay {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
 .artist_list {
   width: 100%;
   display: flex;

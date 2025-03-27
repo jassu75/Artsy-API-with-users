@@ -5,11 +5,11 @@ import TopBar from "./TopBar";
 import useCheckAuth from "../hooks/useCheckAuth";
 
 const Homepage = () => {
-  const { authenticated, user, loading } = useCheckAuth();
+  const { authenticated, loading } = useCheckAuth();
   return !loading ? (
     <div>
       <div className={styles.homepage_container}>
-        <TopBar authenticated={authenticated} user={user} />
+        <TopBar authenticated={authenticated} />
         <main>
           <Outlet />
         </main>

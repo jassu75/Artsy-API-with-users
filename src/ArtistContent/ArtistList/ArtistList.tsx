@@ -5,6 +5,7 @@ import EmptyArtistList from "./EmptyArtistList";
 import ArtistDetails from "../ArtistDetails/ArtistDetails";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import FavortiesIcon from "../../AuthorisedControls/FavoritesIcon";
 
 const ArtistList = ({
   artistList,
@@ -49,6 +50,10 @@ const ArtistList = ({
                   variant="top"
                   className={styles.card_image}
                 />
+                <Card.ImgOverlay className={styles.image_overlay}>
+                  <FavortiesIcon artistId={artistDetails.id} />
+                </Card.ImgOverlay>
+
                 <Card.Body
                   className={`${styles.card_body} ${
                     artistDetails.id === activeArtistCardId ? styles.active : ""
