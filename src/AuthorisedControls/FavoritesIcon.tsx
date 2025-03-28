@@ -1,52 +1,56 @@
-import { Button } from "react-bootstrap";
 import styles from "./favoritesIcon.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { addFavoriteList, removeFavoriteList } from "../redux/user.slice";
 import { addFavorite, deleteFavorite } from "../utils/handleFavorites";
 
-const FavortiesIcon = ({ artistId }: { artistId: string }) => {
+const FavortiesIcon = ({
+  artistId,
+  parent,
+}: {
+  artistId: string;
+  parent: string;
+}) => {
   const favoritesList = useSelector(
     (state: RootState) => state.userSlice.favoritesList
   );
   const user = useSelector((state: RootState) => state.userSlice.user);
-  const [userFavorite, setUserFavorite] = useState<boolean>(
-    favoritesList?.includes(artistId) ?? false
-  );
   const dispatch = useDispatch();
 
   const handleFavoriteIconClick = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation();
-    setUserFavorite(!userFavorite);
-  };
-
-  useEffect(() => {
-    if (userFavorite) {
-      dispatch(addFavoriteList(artistId));
-      addFavorite(artistId);
-    } else {
+    if (favoritesList?.includes(artistId)) {
       dispatch(removeFavoriteList(artistId));
       deleteFavorite(artistId);
+    } else {
+      dispatch(addFavoriteList(artistId));
+      addFavorite(artistId);
     }
-  }, [userFavorite, artistId, dispatch]);
+  };
 
   return user ? (
-    <Button
-      className={styles.favorites_button}
+    <button
+      className={`${styles.favorites_button} ${
+        parent == "artistInfo" ? styles.white_fill : styles.blue_fill
+      } `}
       onClick={(event) => {
         handleFavoriteIconClick(event);
       }}
     >
       <img
         src={
-          userFavorite ? "/assets/filled_star.svg" : "/assets/unfilled_star.svg"
+          favoritesList?.includes(artistId)
+            ? "/assets/filled_star.svg"
+            : parent === "artistInfo"
+            ? "/assets/black_unfilled_star.svg"
+            : "/assets/unfilled_star.svg"
         }
         className={styles.favorites_image}
       />
-    </Button>
+    </button>
   ) : null;
 };
 

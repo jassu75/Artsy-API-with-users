@@ -79,7 +79,7 @@ const ArtistDetails = () => {
       ) : (
         <>
           {artistInfo && activeTab === "artistInfo" && (
-            <ArtistInfo artistInfo={artistInfo} />
+            <ArtistInfo artistInfo={artistInfo} artistId={artistId} />
           )}
           {artworks && activeTab === "artWorks" && (
             <Artworks artworks={artworks} />

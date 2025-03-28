@@ -2,6 +2,7 @@ import { Card } from "react-bootstrap";
 import { TypeArtistListDetails } from "../../UnauthorisedControls/unauthorizedControl.types";
 import styles from "./similarArtistList.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import FavortiesIcon from "../../AuthorisedControls/FavoritesIcon";
 
 const SimilarArtistList = ({
   artistList,
@@ -35,6 +36,13 @@ const SimilarArtistList = ({
                   variant="top"
                   className={styles.card_image}
                 />
+
+                <Card.ImgOverlay className={styles.image_overlay}>
+                  <FavortiesIcon
+                    parent={`similarArtistList`}
+                    artistId={artistDetails.id}
+                  />
+                </Card.ImgOverlay>
                 <Card.Body className={styles.card_body}>
                   <Card.Title className={styles.card_title}>
                     {artistDetails.title}

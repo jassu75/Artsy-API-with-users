@@ -51,7 +51,10 @@ const ArtistList = ({
                   className={styles.card_image}
                 />
                 <Card.ImgOverlay className={styles.image_overlay}>
-                  <FavortiesIcon artistId={artistDetails.id} />
+                  <FavortiesIcon
+                    parent={`artistList`}
+                    artistId={artistDetails.id}
+                  />
                 </Card.ImgOverlay>
 
                 <Card.Body

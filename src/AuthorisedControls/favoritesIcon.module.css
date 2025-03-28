@@ -5,8 +5,17 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
+  border: none;
+}
+
+.blue_fill {
   background-color: #205375;
 }
+
+.white_fill {
+  background-color: #ffffff;
+}
+
 .favorites_image {
   width: 20px;
   height: 20px;

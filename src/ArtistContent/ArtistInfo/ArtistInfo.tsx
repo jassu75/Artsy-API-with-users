@@ -1,13 +1,21 @@
+import FavortiesIcon from "../../AuthorisedControls/FavoritesIcon";
 import { TypeArtistInfo } from "../../UnauthorisedControls/unauthorizedControl.types";
 import styles from "./artistInfo.module.css";
 
-const ArtistInfo = ({ artistInfo }: { artistInfo: TypeArtistInfo }) => {
+const ArtistInfo = ({
+  artistInfo,
+  artistId,
+}: {
+  artistInfo: TypeArtistInfo;
+  artistId: string;
+}) => {
   const cleanedBio = artistInfo.biography.replace(/(\w+)-\s+(\w+)/g, "$1$2");
   return (
     <div className={styles.description_container}>
-      <span className={styles.description_title_text}>
-        {artistInfo.artistName}
-      </span>
+      <div className={styles.description_title_text}>
+        <span>{artistInfo.artistName}</span>
+        <FavortiesIcon artistId={artistId} parent={`artistInfo`} />
+      </div>
       <span className={styles.description_nationality_text}>
         {artistInfo.nationality}, {artistInfo.birthDay} - {artistInfo.deathDay}
       </span>

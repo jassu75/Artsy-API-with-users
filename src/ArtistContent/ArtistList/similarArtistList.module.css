@@ -8,6 +8,12 @@
   justify-content: center;
 }
 
+.image_overlay {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
 .similar_artists_heading {
   width: 100%;
   font-weight: 550;

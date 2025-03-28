@@ -12,6 +12,10 @@
   font-size: 24px;
   font-weight: bold;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .description_nationality_text {
