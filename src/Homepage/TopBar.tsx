@@ -1,8 +1,8 @@
 import styles from "./topBar.module.css";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { useState } from "react";
-import { logout, deleteAccount } from "../utils/handleAccount";
+import { useEffect, useState } from "react";
+import { logout, deleteAccount } from "../utils/handleAccount.utils";
 import { Link, useLocation } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Profile from "./Profile";
@@ -11,9 +11,16 @@ import { RootState } from "../redux/store";
 
 const TopBar = ({ authenticated }: { authenticated: boolean }) => {
   const location = useLocation();
-  const activePath = location.pathname.split("/").filter(Boolean)[0];
-  const [view, setView] = useState<string>(activePath || "search");
+  const [view, setView] = useState<string>(
+    location.pathname.split("/").filter(Boolean)[0] || "search"
+  );
   const user = useSelector((state: RootState) => state.userSlice.user);
+
+  useEffect(() => {
+    if (location.pathname) {
+      setView(location.pathname.split("/").filter(Boolean)[0] || "search");
+    }
+  }, [location.pathname]);
 
   return (
     <Navbar collapseOnSelect expand="lg" className={styles.navbar}>

@@ -5,6 +5,12 @@ const addUserFavorite = async (req, res, next) => {
     if (req.isAuthenticated) {
       const artistId = req.params.artistId;
       const artistInfo = req.artistInfo;
+      const image =
+        artistInfo?._links?.thumbnail?.href &&
+        artistInfo._links.thumbnail.href !== "/assets/shared/missing_image.png"
+          ? artistInfo._links.thumbnail.href
+          : "/assets/artsy_logo.svg";
+
       const favorite = {
         artistId: artistId,
         artistName: artistInfo.name || "",
@@ -12,6 +18,7 @@ const addUserFavorite = async (req, res, next) => {
         deathDay: artistInfo.deathday || "",
         nationality: artistInfo.nationality || "",
         createdAt: new Date(),
+        image: image,
       };
       const { email } = req.user;
       const updatedUser = await User.findOneAndUpdate(

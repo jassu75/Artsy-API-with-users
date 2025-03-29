@@ -59,4 +59,6 @@ export type TypeFavorite = {
   birthDay: string;
   deathDay: string;
   nationality: string;
+  image: string;
+  createdAt: Date;
 };

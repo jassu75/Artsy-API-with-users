@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
         deathDay: { type: String, default: "" },
         nationality: { type: String, default: "" },
         createdAt: { type: Date, default: Date.now },
+        image: { type: String, required: true },
       },
     ],
     required: true,
