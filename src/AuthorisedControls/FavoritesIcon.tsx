@@ -2,8 +2,8 @@ import styles from "./favoritesIcon.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import React from "react";
-import { addFavoriteList, removeFavoriteList } from "../redux/user.slice";
-import { addFavorite, deleteFavorite } from "../utils/handleFavorites";
+import { addFavoriteListIds, removeFavoriteListIds } from "../redux/user.slice";
+import useHandleFavorites from "../hooks/useHandleFavorites";
 
 const FavortiesIcon = ({
   artistId,
@@ -12,8 +12,9 @@ const FavortiesIcon = ({
   artistId: string;
   parent: string;
 }) => {
-  const favoritesList = useSelector(
-    (state: RootState) => state.userSlice.favoritesList
+  const { addFavorite, deleteFavorite } = useHandleFavorites();
+  const favoritesListIds = useSelector(
+    (state: RootState) => state.userSlice.favoritesListIds
   );
   const user = useSelector((state: RootState) => state.userSlice.user);
   const dispatch = useDispatch();
@@ -22,11 +23,11 @@ const FavortiesIcon = ({
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation();
-    if (favoritesList?.includes(artistId)) {
-      dispatch(removeFavoriteList(artistId));
+    if (favoritesListIds?.includes(artistId)) {
+      dispatch(removeFavoriteListIds(artistId));
       deleteFavorite(artistId);
     } else {
-      dispatch(addFavoriteList(artistId));
+      dispatch(addFavoriteListIds(artistId));
       addFavorite(artistId);
     }
   };
@@ -42,7 +43,7 @@ const FavortiesIcon = ({
     >
       <img
         src={
-          favoritesList?.includes(artistId)
+          favoritesListIds?.includes(artistId)
             ? "/assets/filled_star.svg"
             : parent === "artistInfo"
             ? "/assets/black_unfilled_star.svg"

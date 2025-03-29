@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { setFavoriteList, setUser } from "../redux/user.slice";
+import {
+  setFavoriteListIds,
+  setFavoriteList,
+  setUser,
+} from "../redux/user.slice";
+import { TypeFavorite } from "../UnauthorisedControls/unauthorizedControl.types";
 
 const useCheckAuth = () => {
   const [authenticated, setAuthenticated] = useState<boolean>(false);
@@ -24,6 +29,10 @@ const useCheckAuth = () => {
         setAuthenticated(true);
         dispatch(setUser(response.data.user));
         dispatch(setFavoriteList(response.data.favoritesList));
+        const favoriteListIds = response.data.favoritesList.map(
+          (favorite: TypeFavorite) => favorite.artistId
+        );
+        dispatch(setFavoriteListIds(favoriteListIds));
       } catch (error) {
         setAuthenticated(false);
         console.error("Authentication check failed:", error);

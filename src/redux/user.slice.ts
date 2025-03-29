@@ -3,6 +3,7 @@ import { UserState } from "../UnauthorisedControls/unauthorizedControl.types";
 
 const initialState: UserState = {
   user: null,
+  favoritesListIds: null,
   favoritesList: null,
 };
 
@@ -13,28 +14,36 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    setFavoriteList: (state, action) => {
-      state.favoritesList = action.payload;
+    setFavoriteListIds: (state, action) => {
+      state.favoritesListIds = action.payload;
     },
-    addFavoriteList: (state, action) => {
-      if (state.favoritesList) {
-        state.favoritesList = Array.from(
-          new Set(state.favoritesList.concat(action.payload))
+    addFavoriteListIds: (state, action) => {
+      if (state.favoritesListIds) {
+        state.favoritesListIds = Array.from(
+          new Set(state.favoritesListIds.concat(action.payload))
         );
       }
     },
 
-    removeFavoriteList: (state, action) => {
-      if (state.favoritesList) {
-        state.favoritesList = state.favoritesList.filter(
+    removeFavoriteListIds: (state, action) => {
+      if (state.favoritesListIds) {
+        state.favoritesListIds = state.favoritesListIds.filter(
           (artistId) => artistId !== action.payload
         );
       }
     },
+    setFavoriteList: (state, action) => {
+      state.favoritesList = action.payload;
+    },
   },
 });
 
-export const { setUser, setFavoriteList, addFavoriteList, removeFavoriteList } =
-  userSlice.actions;
+export const {
+  setUser,
+  setFavoriteListIds,
+  addFavoriteListIds,
+  removeFavoriteListIds,
+  setFavoriteList,
+} = userSlice.actions;
 
 export default userSlice.reducer;

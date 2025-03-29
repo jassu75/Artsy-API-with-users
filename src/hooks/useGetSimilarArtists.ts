@@ -23,7 +23,6 @@ const useGetSimilarArtists = (artistId: string | null) => {
             headers: headers,
           };
           const response = await axios.get(url, axiosOptions);
-          console.log(response.data);
           const refinedSimilarArtists = response.data.similarArtistList.map(
             (artistInfo: any) => {
               const image =

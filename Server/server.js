@@ -87,7 +87,6 @@ app.get(
           email: req.user.email,
           fullname: req.user.fullname,
           profileUrl: req.user.profileUrl,
-          favoritesList: req.user.favoritesList,
         },
         favoritesList: req.favoritesList,
       });
@@ -112,6 +111,8 @@ app.get(
 app.post(
   "/api/adduserfavorite/:artistId",
   checkAuth,
+  getArtsyToken,
+  getArtistInfo,
   addUserFavorite,
   (req, res) => {
     if (req.favoritesList) {

@@ -7,7 +7,7 @@ const deleteUserFavorite = async (req, res, next) => {
       const { email } = req.user;
       const updatedUser = await User.findOneAndUpdate(
         { email },
-        { $pull: { favoritesList: artistId } },
+        { $pull: { favoritesList: { artistId: artistId } } },
         { new: true, upsert: false }
       );
       if (updatedUser) {

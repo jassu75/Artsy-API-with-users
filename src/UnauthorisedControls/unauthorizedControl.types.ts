@@ -49,5 +49,14 @@ export type TypeError = {
 
 export type UserState = {
   user: TypeUser | null;
-  favoritesList: string[] | null;
+  favoritesListIds: string[] | null;
+  favoritesList: TypeFavorite[] | null;
+};
+
+export type TypeFavorite = {
+  artistId: string;
+  artistName: string;
+  birthDay: string;
+  deathDay: string;
+  nationality: string;
 };

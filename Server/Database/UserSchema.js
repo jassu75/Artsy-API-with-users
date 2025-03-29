@@ -5,7 +5,19 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   profileUrl: { type: String, required: true },
-  favoritesList: { type: [String], required: true },
+  favoritesList: {
+    type: [
+      {
+        artistId: { type: String, required: true },
+        artistName: { type: String, default: "" },
+        birthDay: { type: String, default: "" },
+        deathDay: { type: String, default: "" },
+        nationality: { type: String, default: "" },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
+    required: true,
+  },
 });
 
 const User = mongoose.model("User", UserSchema, "users");
