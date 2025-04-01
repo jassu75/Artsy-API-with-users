@@ -16,9 +16,25 @@ import getSimilarArtists from "./MiddleWare/getSimilarArtists.js";
 import addUserFavorite from "./Database/addUserFavorite.js";
 import retrieveFavoriteList from "./Database/retrieveFavoriteList.js";
 import deleteUserFavorite from "./Database/deleteUserFavorite.js";
+import path from "path";
+
 const app = express();
+const buildFilePath = path.join(process.cwd(), "dist");
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static(buildFilePath));
+
+//Database connection
+
+connectToDb()
+  .then(() => {
+    app.listen(process.env.PORT, () => {
+      console.log("Server started successfully");
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to connect to the database", err);
+  });
 
 //ArtistList
 
@@ -48,18 +64,6 @@ app.get("/api/artworks/:artistId", getArtsyToken, getArtWorks, (req, res) => {
 app.get("/api/category/:artworkId", getArtsyToken, getCategory, (req, res) => {
   res.json(req.category);
 });
-
-//Database connection
-
-connectToDb()
-  .then(() => {
-    app.listen(5000, () => {
-      console.log("Server started successfully");
-    });
-  })
-  .catch((err) => {
-    console.error("Failed to connect to the database", err);
-  });
 
 app.post("/api/db/register", addRegisteredUser);
 
@@ -145,3 +149,7 @@ app.post(
     }
   }
 );
+
+app.all("*", (req, res) => {
+  res.sendFile(path.join(buildFilePath, "index.html"));
+});
