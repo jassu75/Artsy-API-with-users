@@ -9,7 +9,7 @@ const ArtistInfo = ({
   artistInfo: TypeArtistInfo;
   artistId: string;
 }) => {
-  const cleanedBio = artistInfo.biography.replace(/(\w+)-\s+(\w+)/g, "$1$2");
+  const cleanedBio = artistInfo.biography.replace(/-\s+/g, "");
   return (
     <div className={styles.description_container}>
       <div className={styles.description_title_text}>

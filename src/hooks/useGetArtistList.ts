@@ -30,6 +30,6 @@ const useGetArtistList = () => {
     }
   };
 
-  return { artistList, loading, fetchArtistList };
+  return { artistList, loading, fetchArtistList, setArtistList };
 };
 export default useGetArtistList;

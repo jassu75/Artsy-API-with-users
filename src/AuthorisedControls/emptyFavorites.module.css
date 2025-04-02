@@ -1,0 +1,14 @@
+.empty_favorites {
+  width: 70%;
+  background-color: #fad8da;
+  padding: 10px;
+  font-size: 13px;
+}
+
+.empty_favorites_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}

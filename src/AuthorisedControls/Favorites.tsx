@@ -3,10 +3,10 @@ import { RootState } from "../redux/store";
 import { Card, CardImgOverlay, Col, Image, Row } from "react-bootstrap";
 import styles from "./favorites.module.css";
 import EmptyFavorites from "./EmptyFavorites";
-import { handleInterval } from "../utils/handleFavorites.utils";
 import useHandleFavorites from "../hooks/useHandleFavorites";
 import { removeFavoriteListIds } from "../redux/user.slice";
 import { useNavigate } from "react-router-dom";
+import Timer from "./Timer";
 
 const Favorites = () => {
   const favoritesList = useSelector(
@@ -30,7 +30,7 @@ const Favorites = () => {
     navigate(url);
   };
 
-  return favoritesList ? (
+  return favoritesList && favoritesList.length > 0 ? (
     <div className={styles.favorites_container}>
       <Row xs={1} md={2} lg={3} className={` g-3 ${styles.favorite_list} `}>
         {favoritesList.map((favoriteDetails) => (
@@ -57,9 +57,7 @@ const Favorites = () => {
                   {favoriteDetails.nationality}
                 </p>
                 <div className={styles.interactive_container}>
-                  <span className={styles.time_interval_text}>
-                    {handleInterval(favoriteDetails.createdAt)}
-                  </span>
+                  <Timer createdAt={favoriteDetails.createdAt} />
                   <button
                     onClick={(event) => {
                       handleRemoveClick(event, favoriteDetails.artistId);

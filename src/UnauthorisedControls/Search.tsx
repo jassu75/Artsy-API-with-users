@@ -7,13 +7,22 @@ import Spinner from "react-bootstrap/Spinner";
 import useGetArtistList from "../hooks/useGetArtistList";
 import { useState } from "react";
 import ArtistList from "../ArtistContent/ArtistList/ArtistList";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [artistName, setArtistName] = useState<string | null>(null);
-  const { artistList, loading, fetchArtistList } = useGetArtistList();
+  const navigate = useNavigate();
+  const { artistList, loading, fetchArtistList, setArtistList } =
+    useGetArtistList();
 
   const handleSearch = () => {
     fetchArtistList(artistName);
+  };
+
+  const handleClear = () => {
+    setArtistList(null);
+    setArtistName(null);
+    navigate("/");
   };
 
   const handleEnterPress = (event: any) => {
@@ -29,6 +38,7 @@ const Search = () => {
           type="search"
           placeholder="Please enter an artist name"
           size="sm"
+          value={artistName || ""}
           onChange={(e) => setArtistName(e.target.value)}
           onKeyDown={handleEnterPress}
         />
@@ -51,7 +61,7 @@ const Search = () => {
             />
           ) : null}
         </Button>
-        <Button className={styles.clear_button} size="sm">
+        <Button className={styles.clear_button} size="sm" onClick={handleClear}>
           Clear
         </Button>
       </InputGroup>

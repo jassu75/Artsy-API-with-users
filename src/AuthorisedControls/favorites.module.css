@@ -37,12 +37,6 @@
   font-weight: 200;
 }
 
-.time_interval_text {
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 200;
-}
-
 .favorites_image {
   object-fit: cover;
   width: 100%;
@@ -58,6 +52,7 @@
 }
 
 .remove_text {
+  border: none;
   background: none;
   color: #ffffff;
   font-size: 12px;
