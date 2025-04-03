@@ -1,0 +1,15 @@
+.success {
+  background-color: #98ff98;
+}
+
+.danger {
+  background-color: #fad8da;
+}
+
+.success_notification_container {
+  width: 180px;
+}
+
+.danger_notification_container {
+  width: 210px;
+}

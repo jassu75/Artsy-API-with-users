@@ -51,6 +51,13 @@ export type UserState = {
   user: TypeUser | null;
   favoritesListIds: string[] | null;
   favoritesList: TypeFavorite[] | null;
+  notifications: TypeNotification[] | null;
+};
+
+export type TypeNotification = {
+  id: number;
+  message: string;
+  type: string;
 };
 
 export type TypeFavorite = {

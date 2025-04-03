@@ -5,6 +5,7 @@ const initialState: UserState = {
   user: null,
   favoritesListIds: null,
   favoritesList: null,
+  notifications: null,
 };
 
 const userSlice = createSlice({
@@ -35,6 +36,16 @@ const userSlice = createSlice({
     setFavoriteList: (state, action) => {
       state.favoritesList = action.payload;
     },
+    addNotification: (state, action) => {
+      state.notifications = [action.payload, ...(state.notifications || [])];
+    },
+    deleteNotification: (state, action) => {
+      if (state.notifications) {
+        state.notifications = state.notifications.filter(
+          (toast) => toast.id !== action.payload.id
+        );
+      }
+    },
   },
 });
 
@@ -44,6 +55,8 @@ export const {
   addFavoriteListIds,
   removeFavoriteListIds,
   setFavoriteList,
+  addNotification,
+  deleteNotification,
 } = userSlice.actions;
 
 export default userSlice.reducer;

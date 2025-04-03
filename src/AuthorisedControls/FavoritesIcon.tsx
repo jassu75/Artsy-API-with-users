@@ -2,7 +2,11 @@ import styles from "./favoritesIcon.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import React from "react";
-import { addFavoriteListIds, removeFavoriteListIds } from "../redux/user.slice";
+import {
+  addFavoriteListIds,
+  addNotification,
+  removeFavoriteListIds,
+} from "../redux/user.slice";
 import useHandleFavorites from "../hooks/useHandleFavorites";
 
 const FavortiesIcon = ({
@@ -24,9 +28,21 @@ const FavortiesIcon = ({
   ) => {
     event.stopPropagation();
     if (favoritesListIds?.includes(artistId)) {
+      const notification = {
+        id: Date.now(),
+        message: "Removed from Favorites",
+        type: "danger",
+      };
+      dispatch(addNotification(notification));
       dispatch(removeFavoriteListIds(artistId));
       deleteFavorite(artistId);
     } else {
+      const notification = {
+        id: Date.now(),
+        message: "Added to Favorites",
+        type: "success",
+      };
+      dispatch(addNotification(notification));
       dispatch(addFavoriteListIds(artistId));
       addFavorite(artistId);
     }
