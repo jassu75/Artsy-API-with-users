@@ -22,8 +22,8 @@ const addUserFavorite = async (req, res, next) => {
       };
       const { email } = req.user;
       const updatedUser = await User.findOneAndUpdate(
-        { email },
-        { $addToSet: { favoritesList: favorite } },
+        { email, "favoritesList.artistId": { $ne: artistId } },
+        { $push: { favoritesList: favorite } },
         { new: true, upsert: false }
       );
       if (updatedUser) {

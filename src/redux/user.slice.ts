@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { UserState } from "../UnauthorisedControls/unauthorizedControl.types";
+import {
+  TypeFavorite,
+  UserState,
+} from "../UnauthorisedControls/unauthorizedControl.types";
 
 const initialState: UserState = {
   user: null,
@@ -39,7 +42,13 @@ const userSlice = createSlice({
       }
     },
     setFavoriteList: (state, action) => {
-      state.favoritesList = action.payload;
+      state.favoritesList = action.payload.sort(
+        (a: TypeFavorite, b: TypeFavorite) => {
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+        }
+      );
     },
     addNotification: (state, action) => {
       state.notifications = [action.payload, ...(state.notifications || [])];
