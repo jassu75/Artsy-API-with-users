@@ -34,7 +34,7 @@ const Notification = () => {
   };
   return (
     <div>
-      <ToastContainer position="top-end" className="p-3">
+      <ToastContainer position="top-end" className={styles.toast_container}>
         {notifications?.map((toast: TypeNotification) => (
           <Toast
             key={toast.id}

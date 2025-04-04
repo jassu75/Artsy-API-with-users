@@ -33,3 +33,7 @@
 .delete_account_notification_container {
   width: 160px;
 }
+
+.toast_container {
+  padding: 48px 12px 12px 12px;
+}

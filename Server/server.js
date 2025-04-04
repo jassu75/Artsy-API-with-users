@@ -179,5 +179,5 @@ app.post(
 );
 
 app.all("*", (req, res) => {
-  res.sendFile(path.join(buildFilePath, "index.html"));
+  return res.sendFile(path.join(buildFilePath, "index.html"));
 });

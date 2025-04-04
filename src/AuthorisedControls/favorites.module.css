@@ -3,6 +3,9 @@
   height: 135px;
 }
 
+.favorite_list {
+  width: 98%;
+}
 .favorites_container {
   padding: 16px;
   display: flex;
