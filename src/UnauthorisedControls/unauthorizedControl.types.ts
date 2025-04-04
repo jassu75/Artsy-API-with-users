@@ -52,6 +52,7 @@ export type UserState = {
   favoritesListIds: string[] | null;
   favoritesList: TypeFavorite[] | null;
   notifications: TypeNotification[] | null;
+  authenticated: boolean;
 };
 
 export type TypeNotification = {

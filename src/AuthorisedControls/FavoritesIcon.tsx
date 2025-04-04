@@ -20,7 +20,9 @@ const FavortiesIcon = ({
   const favoritesListIds = useSelector(
     (state: RootState) => state.userSlice.favoritesListIds
   );
-  const user = useSelector((state: RootState) => state.userSlice.user);
+  const authenticated = useSelector(
+    (state: RootState) => state.userSlice.authenticated
+  );
   const dispatch = useDispatch();
 
   const handleFavoriteIconClick = (
@@ -48,7 +50,7 @@ const FavortiesIcon = ({
     }
   };
 
-  return user ? (
+  return authenticated ? (
     <button
       className={`${styles.favorites_button} ${
         parent == "artistInfo" ? styles.white_fill : styles.blue_fill

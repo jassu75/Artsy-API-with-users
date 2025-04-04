@@ -19,11 +19,8 @@ const addRegisteredUser = async (req, res, next) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      const errorInfo = {
-        field: "email",
-        message: "User with this email already exists",
-      };
-      return res.status(400).json(errorInfo);
+      req.isAuthenticated = false;
+      return next();
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -50,12 +47,14 @@ const addRegisteredUser = async (req, res, next) => {
       httpOnly: true,
     });
 
-    return res.status(201).json("User Added");
+    req.isAuthenticated = true;
+    req.user = payload;
+    req.favoritesList = favoritesList;
+    return next();
   } catch (err) {
     console.error(err);
-    return res.status(500).json(err);
-  } finally {
-    next();
+    req.isAuthenticated = false;
+    return next();
   }
 };
 

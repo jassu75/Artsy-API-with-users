@@ -1,7 +1,9 @@
 import Image from "react-bootstrap/Image";
-import { TypeUser } from "../UnauthorisedControls/unauthorizedControl.types";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
-const Profile = ({ user }: { user: TypeUser | null }) => {
+const Profile = () => {
+  const user = useSelector((state: RootState) => state.userSlice.user);
   return user ? (
     <>
       <Image

@@ -1,0 +1,14 @@
+.access_denied {
+  width: 70%;
+  background-color: #fad8da;
+  padding: 10px;
+  font-size: 13px;
+}
+
+.access_denied_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}

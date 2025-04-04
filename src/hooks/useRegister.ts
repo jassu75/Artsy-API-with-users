@@ -1,9 +1,22 @@
 import { useState } from "react";
-import { TypeUserRegister } from "../UnauthorisedControls/unauthorizedControl.types";
+import {
+  TypeFavorite,
+  TypeUserRegister,
+} from "../UnauthorisedControls/unauthorizedControl.types";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  setAuthentication,
+  setFavoriteList,
+  setFavoriteListIds,
+  setUser,
+} from "../redux/user.slice";
 
 const useRegister = () => {
   const [error, setError] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const registerUser = async (registerData: TypeUserRegister) => {
     try {
@@ -15,13 +28,19 @@ const useRegister = () => {
       };
       const url = "/api/db/register";
       setError(false);
-      await axios.post(url, registerData, axiosOptions);
-      window.location.href = "/";
+      const response = await axios.post(url, registerData, axiosOptions);
+      dispatch(setAuthentication(true));
+      dispatch(setUser(response.data.user));
+      dispatch(setFavoriteList(response.data.favoritesList));
+      const favoriteListIds = response.data.favoritesList.map(
+        (favorite: TypeFavorite) => favorite.artistId
+      );
+      dispatch(setFavoriteListIds(favoriteListIds));
+      navigate("/");
     } catch (err) {
       setError(true);
-      if (axios.isAxiosError(err) && err.response?.status === 400) {
-        setError(true);
-      } else {
+      dispatch(setAuthentication(false));
+      if (!(axios.isAxiosError(err) && err.response?.status === 400)) {
         console.error(err);
       }
     }

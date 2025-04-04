@@ -4,9 +4,10 @@ import { Card, CardImgOverlay, Col, Image, Row } from "react-bootstrap";
 import styles from "./favorites.module.css";
 import EmptyFavorites from "./EmptyFavorites";
 import useHandleFavorites from "../hooks/useHandleFavorites";
-import { removeFavoriteListIds } from "../redux/user.slice";
+import { addNotification, removeFavoriteListIds } from "../redux/user.slice";
 import { useNavigate } from "react-router-dom";
 import Timer from "./Timer";
+import AccessDenied from "../UnauthorisedControls/AccessDenied";
 
 const Favorites = () => {
   const favoritesList = useSelector(
@@ -21,6 +22,12 @@ const Favorites = () => {
     artistId: string
   ) => {
     event.stopPropagation();
+    const notification = {
+      id: Date.now(),
+      message: "Removed from Favorites",
+      type: "danger",
+    };
+    dispatch(addNotification(notification));
     dispatch(removeFavoriteListIds(artistId));
     deleteFavorite(artistId);
   };
@@ -30,7 +37,11 @@ const Favorites = () => {
     navigate(url);
   };
 
-  return favoritesList && favoritesList.length > 0 ? (
+  if (!favoritesList) {
+    return <AccessDenied />;
+  }
+
+  return favoritesList.length > 0 ? (
     <div className={styles.favorites_container}>
       <Row xs={1} md={2} lg={3} className={` g-3 ${styles.favorite_list} `}>
         {favoritesList.map((favoriteDetails) => (

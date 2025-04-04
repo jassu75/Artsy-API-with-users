@@ -2,19 +2,22 @@ import styles from "./topBar.module.css";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useEffect, useState } from "react";
-import { logout, deleteAccount } from "../utils/handleAccount.utils";
 import { Link, useLocation } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Profile from "./Profile";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import useHandleAccount from "../hooks/useHandleAccount";
 
-const TopBar = ({ authenticated }: { authenticated: boolean }) => {
+const TopBar = () => {
   const location = useLocation();
   const [view, setView] = useState<string>(
     location.pathname.split("/").filter(Boolean)[0] || "search"
   );
-  const user = useSelector((state: RootState) => state.userSlice.user);
+  const authenticated = useSelector(
+    (state: RootState) => state.userSlice.authenticated
+  );
+  const { logout, deleteAccount } = useHandleAccount();
 
   useEffect(() => {
     if (location.pathname) {
@@ -31,7 +34,6 @@ const TopBar = ({ authenticated }: { authenticated: boolean }) => {
           <Nav.Link
             as={Link}
             to="/"
-            onClick={() => setView("search")}
             className={`${styles.navbar_button} ${
               view == "search" ? styles.active : ""
             } px-3 mr-1`}
@@ -42,7 +44,6 @@ const TopBar = ({ authenticated }: { authenticated: boolean }) => {
             <Nav.Link
               as={Link}
               to="/favorites"
-              onClick={() => setView("favorites")}
               className={`${styles.navbar_button} ${
                 view == "favorites" ? styles.active : ""
               } px-3 mr-1`}
@@ -53,7 +54,6 @@ const TopBar = ({ authenticated }: { authenticated: boolean }) => {
             <Nav.Link
               as={Link}
               to="/login"
-              onClick={() => setView("login")}
               className={`${styles.navbar_button} ${
                 view == "login" ? styles.active : ""
               } px-3 mr-1`}
@@ -63,13 +63,13 @@ const TopBar = ({ authenticated }: { authenticated: boolean }) => {
           )}
           {authenticated ? (
             <NavDropdown
-              title={<Profile user={user} />}
+              title={<Profile />}
               className={`${styles.navbar_button} px-3 mr-1`}
             >
               <NavDropdown.Item
                 className={styles.delete_acct_item}
                 onClick={() => {
-                  deleteAccount(user);
+                  deleteAccount();
                 }}
               >
                 Delete account
@@ -82,7 +82,6 @@ const TopBar = ({ authenticated }: { authenticated: boolean }) => {
             <Nav.Link
               as={Link}
               to="/register"
-              onClick={() => setView("register")}
               className={`${styles.navbar_button} ${
                 view === "register" ? styles.active : ""
               } px-3 mr-1`}

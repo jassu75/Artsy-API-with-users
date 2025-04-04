@@ -1,15 +1,35 @@
 .success {
   background-color: #98ff98;
+  font-size: 12px;
 }
 
 .danger {
   background-color: #fad8da;
+  font-size: 12px;
+}
+
+.logout {
+  font-size: 12px;
+  background-color: #cccccc;
+}
+
+.delete_account {
+  background-color: #fad8da;
+  font-size: 12px;
 }
 
 .success_notification_container {
-  width: 180px;
+  width: 160px;
 }
 
 .danger_notification_container {
-  width: 210px;
+  width: 200px;
+}
+
+.logout_notification_container {
+  width: 120px;
+}
+
+.delete_account_notification_container {
+  width: 160px;
 }

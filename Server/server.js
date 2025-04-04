@@ -39,7 +39,7 @@ connectToDb()
 //ArtistList
 
 app.get("/api/search/:artistName", getArtsyToken, getArtistList, (req, res) => {
-  res.json(req.artistList);
+  return res.json(req.artistList);
 });
 
 //artistInfo
@@ -49,32 +49,60 @@ app.get(
   getArtsyToken,
   getArtistInfo,
   (req, res) => {
-    res.json(req.artistInfo);
+    return res.json(req.artistInfo);
   }
 );
 
 //artworks
 
 app.get("/api/artworks/:artistId", getArtsyToken, getArtWorks, (req, res) => {
-  res.json(req.artWorks);
+  return res.json(req.artWorks);
 });
 
 //categories
 
 app.get("/api/category/:artworkId", getArtsyToken, getCategory, (req, res) => {
-  res.json(req.category);
+  return res.json(req.category);
 });
 
-app.post("/api/db/register", addRegisteredUser);
+app.post("/api/db/register", addRegisteredUser, (req, res) => {
+  if (!req.isAuthenticated) {
+    return res.status(401).json({ authenticated: false });
+  } else {
+    return res.status(201).json({
+      authenticated: true,
+      user: {
+        email: req.user.email,
+        fullname: req.user.fullname,
+        profileUrl: req.user.profileUrl,
+      },
+      favoritesList: req.favoritesList,
+    });
+  }
+});
 
-app.post("/api/db/login", loginUser);
+app.post("/api/db/login", loginUser, (req, res) => {
+  if (!req.isAuthenticated) {
+    return res.status(401).json({ authenticated: false });
+  } else {
+    return res.status(201).json({
+      authenticated: true,
+      user: {
+        email: req.user.email,
+        fullname: req.user.fullname,
+        profileUrl: req.user.profileUrl,
+      },
+      favoritesList: req.favoritesList,
+    });
+  }
+});
 
 app.post("/api/logout", logout, (req, res) => {
-  res.status(201).json("Cookie cleared");
+  return res.status(201).json("Cookie cleared");
 });
 
 app.post("/api/deleteaccount", deleteUser, logout, (re1, res) => {
-  res.json("Account deleted successfully");
+  return res.json("Account deleted successfully");
 });
 
 app.get(
@@ -83,9 +111,9 @@ app.get(
   retrieveFavoriteList,
   (req, res) => {
     if (!req.isAuthenticated) {
-      res.status(401).json({ authenticated: false });
+      return res.status(401).json({ authenticated: false });
     } else {
-      res.status(200).json({
+      return res.status(200).json({
         authenticated: true,
         user: {
           email: req.user.email,

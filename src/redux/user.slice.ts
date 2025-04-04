@@ -6,6 +6,7 @@ const initialState: UserState = {
   favoritesListIds: null,
   favoritesList: null,
   notifications: null,
+  authenticated: false,
 };
 
 const userSlice = createSlice({
@@ -14,6 +15,10 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
+    },
+
+    setAuthentication: (state, action) => {
+      state.authenticated = action.payload;
     },
     setFavoriteListIds: (state, action) => {
       state.favoritesListIds = action.payload;
@@ -50,6 +55,7 @@ const userSlice = createSlice({
 });
 
 export const {
+  setAuthentication,
   setUser,
   setFavoriteListIds,
   addFavoriteListIds,

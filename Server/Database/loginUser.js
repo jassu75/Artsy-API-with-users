@@ -8,21 +8,15 @@ const loginUser = async (req, res, next) => {
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      const errorInfo = {
-        field: "email",
-        message: "Email does not exist",
-      };
-      return res.status(400).json(errorInfo);
+      req.isAuthenticated = false;
+      return next();
     }
 
     const dbPassword = existingUser.password;
     const checkPassword = await bcrypt.compare(password, dbPassword);
     if (!checkPassword) {
-      const errorInfo = {
-        field: "password",
-        message: "Incorrect Password",
-      };
-      return res.status(400).json(errorInfo);
+      req.isAuthenticated = false;
+      return next();
     }
     const payload = {
       email: existingUser.email,
@@ -37,12 +31,14 @@ const loginUser = async (req, res, next) => {
       httpOnly: true,
     });
 
-    return res.status(201).json("User Logged In Successfully");
+    req.isAuthenticated = true;
+    req.user = payload;
+    req.favoritesList = existingUser.favoritesList;
+    return next();
   } catch (err) {
     console.error(err);
-    return res.status(500).json(err);
-  } finally {
-    next();
+    req.isAuthenticated = false;
+    return next();
   }
 };
 

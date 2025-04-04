@@ -5,11 +5,11 @@ import {
   setFavoriteListIds,
   setFavoriteList,
   setUser,
+  setAuthentication,
 } from "../redux/user.slice";
 import { TypeFavorite } from "../UnauthorisedControls/unauthorizedControl.types";
 
 const useCheckAuth = () => {
-  const [authenticated, setAuthenticated] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ const useCheckAuth = () => {
         };
         const url = "/api/retrievefavoritelist";
         const response = await axios.get(url, axiosOptions);
-        setAuthenticated(true);
+        dispatch(setAuthentication(true));
         dispatch(setUser(response.data.user));
         dispatch(setFavoriteList(response.data.favoritesList));
         const favoriteListIds = response.data.favoritesList.map(
@@ -34,8 +34,10 @@ const useCheckAuth = () => {
         );
         dispatch(setFavoriteListIds(favoriteListIds));
       } catch (error) {
-        setAuthenticated(false);
-        console.error("Authentication check failed:", error);
+        dispatch(setAuthentication(false));
+        if (!(axios.isAxiosError(error) && error.response?.status === 400)) {
+          console.error(error);
+        }
       } finally {
         setLoading(false);
       }
@@ -43,7 +45,7 @@ const useCheckAuth = () => {
     checkAuth();
   }, [dispatch]);
 
-  return { authenticated, loading };
+  return { loading };
 };
 
 export default useCheckAuth;

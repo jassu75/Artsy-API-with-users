@@ -11,6 +11,24 @@ const Notification = () => {
   );
   const dispatch = useDispatch();
 
+  const notificationStyling: {
+    background: Record<string, string>;
+    container: Record<string, string>;
+  } = {
+    background: {
+      success: styles.success,
+      danger: styles.danger,
+      logout: styles.logout,
+      deleteAccount: styles.delete_account,
+    },
+    container: {
+      success: styles.success_notification_container,
+      danger: styles.danger_notification_container,
+      logout: styles.logout_notification_container,
+      deleteAccount: styles.delete_account_notification_container,
+    },
+  };
+
   const handleClose = (toast: TypeNotification) => {
     dispatch(deleteNotification(toast));
   };
@@ -25,16 +43,10 @@ const Notification = () => {
             onClose={() => {
               handleClose(toast);
             }}
-            className={`${
-              toast.type === "success"
-                ? styles.success_notification_container
-                : styles.danger_notification_container
-            }`}
+            className={`${notificationStyling.container[toast.type] || ""}`}
           >
             <Toast.Header
-              className={` ${
-                toast.type === "success" ? styles.success : styles.danger
-              }`}
+              className={` ${notificationStyling.background[toast.type] || ""}`}
             >
               {toast.message}
             </Toast.Header>
