@@ -42,13 +42,15 @@ const userSlice = createSlice({
       }
     },
     setFavoriteList: (state, action) => {
-      state.favoritesList = action.payload.sort(
-        (a: TypeFavorite, b: TypeFavorite) => {
-          return (
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
-        }
-      );
+      if (state.favoritesList) {
+        state.favoritesList = action.payload.sort(
+          (a: TypeFavorite, b: TypeFavorite) => {
+            return (
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            );
+          }
+        );
+      }
     },
     addNotification: (state, action) => {
       state.notifications = [action.payload, ...(state.notifications || [])];

@@ -11,13 +11,25 @@
   font-size: 13px;
 }
 
+.logout_item:active,
+.logout_item:focus {
+  color: #ffffff;
+  background-color: #004383;
+}
+
+.delete_acct_item:active,
+.delete_acct_item:focus {
+  color: #ff0000;
+  background-color: #004383;
+}
+
 .delete_acct_item {
   font-size: 13px;
   color: #ff0000;
 }
 
 .navbar_button.active {
-  color: white;
+  color: #ffffff;
   background-color: #004383;
   border-radius: 8px;
 }
