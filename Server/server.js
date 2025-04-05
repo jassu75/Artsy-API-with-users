@@ -105,24 +105,26 @@ app.post("/api/deleteaccount", deleteUser, logout, (re1, res) => {
   return res.json("Account deleted successfully");
 });
 
+app.get("/api/checkAuth", checkAuth, (req, res) => {
+  if (!req.isAuthenticated) {
+    return res.status(401).json({ authenticated: false });
+  } else {
+    return res.status(200).json({
+      authenticated: true,
+      user: {
+        email: req.user.email,
+        fullname: req.user.fullname,
+        profileUrl: req.user.profileUrl,
+      },
+    });
+  }
+});
+
 app.get(
-  "/api/retrievefavoritelist",
-  checkAuth,
+  "/api/retrievefavoritelist/:email",
   retrieveFavoriteList,
   (req, res) => {
-    if (!req.isAuthenticated) {
-      return res.status(401).json({ authenticated: false });
-    } else {
-      return res.status(200).json({
-        authenticated: true,
-        user: {
-          email: req.user.email,
-          fullname: req.user.fullname,
-          profileUrl: req.user.profileUrl,
-        },
-        favoritesList: req.favoritesList,
-      });
-    }
+    return res.status(200).json(req.favoritesList);
   }
 );
 

@@ -8,10 +8,12 @@ import useGetArtistList from "../hooks/useGetArtistList";
 import { useState } from "react";
 import ArtistList from "../ArtistContent/ArtistList/ArtistList";
 import { useNavigate } from "react-router-dom";
+import useRetrieveFavorites from "../hooks/useRetrieveFavorites";
 
 const Search = () => {
   const [artistName, setArtistName] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { loading: retrieveFavoritesLoader } = useRetrieveFavorites();
   const { artistList, loading, fetchArtistList, setArtistList } =
     useGetArtistList();
 
@@ -31,7 +33,7 @@ const Search = () => {
     }
   };
 
-  return (
+  return !retrieveFavoritesLoader ? (
     <Container className={styles.search_container}>
       <InputGroup>
         <Form.Control
@@ -68,7 +70,7 @@ const Search = () => {
 
       <ArtistList artistList={artistList} />
     </Container>
-  );
+  ) : null;
 };
 
 export default Search;

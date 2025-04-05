@@ -1,6 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { Card, CardImgOverlay, Col, Image, Row } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import CardImgOverlay from "react-bootstrap/CardImgOverlay";
+import Col from "react-bootstrap/Col";
+import Image from "react-bootstrap/Image";
+import Row from "react-bootstrap/Row";
+import Spinner from "react-bootstrap/Spinner";
+
 import styles from "./favorites.module.css";
 import EmptyFavorites from "./EmptyFavorites";
 import useHandleFavorites from "../hooks/useHandleFavorites";
@@ -8,6 +14,7 @@ import { addNotification, removeFavoriteListIds } from "../redux/user.slice";
 import { useNavigate } from "react-router-dom";
 import Timer from "./Timer";
 import AccessDenied from "../UnauthorisedControls/AccessDenied";
+import useRetrieveFavorites from "../hooks/useRetrieveFavorites";
 
 const Favorites = () => {
   const favoritesList = useSelector(
@@ -16,6 +23,7 @@ const Favorites = () => {
   const { deleteFavorite } = useHandleFavorites();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loading } = useRetrieveFavorites();
 
   const handleRemoveClick = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -36,6 +44,19 @@ const Favorites = () => {
     const url = `/?artistid=${artistId}&activetab=artistInfo`;
     navigate(url);
   };
+
+  if (loading) {
+    return (
+      <div className={styles.loading_container}>
+        <Spinner
+          role="status"
+          aria-hidden="true"
+          animation="border"
+          variant="secondary"
+        />
+      </div>
+    );
+  }
 
   if (!favoritesList) {
     return <AccessDenied />;

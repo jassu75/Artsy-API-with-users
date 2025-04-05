@@ -2,16 +2,14 @@ import User from "./UserSchema.js";
 
 const retrieveFavoriteList = async (req, res, next) => {
   try {
-    if (req.isAuthenticated) {
-      const email = req.user.email;
-      const existingUser = await User.findOne({ email }).select(
-        "favoritesList"
-      );
+    const email = req.params.email;
+    const existingUser = await User.findOne({ email }).select("favoritesList");
+    if (existingUser) {
       req.favoritesList = existingUser.favoritesList;
-      return next();
     } else {
-      return next();
+      req.favoritesList = [];
     }
+    return next();
   } catch (err) {
     console.error(err);
     req.favoritesList = [];

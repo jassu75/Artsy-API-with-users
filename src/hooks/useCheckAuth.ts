@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import {
-  setFavoriteListIds,
-  setFavoriteList,
-  setUser,
-  setAuthentication,
-} from "../redux/user.slice";
-import { TypeFavorite } from "../UnauthorisedControls/unauthorizedControl.types";
+import { setUser, setAuthentication } from "../redux/user.slice";
 
 const useCheckAuth = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -24,15 +18,10 @@ const useCheckAuth = () => {
           withCredentials: true,
           headers: headers,
         };
-        const url = "/api/retrievefavoritelist";
+        const url = "/api/checkAuth";
         const response = await axios.get(url, axiosOptions);
         dispatch(setAuthentication(true));
         dispatch(setUser(response.data.user));
-        dispatch(setFavoriteList(response.data.favoritesList));
-        const favoriteListIds = response.data.favoritesList.map(
-          (favorite: TypeFavorite) => favorite.artistId
-        );
-        dispatch(setFavoriteListIds(favoriteListIds));
       } catch (error) {
         dispatch(setAuthentication(false));
         if (!(axios.isAxiosError(error) && error.response?.status === 400)) {
