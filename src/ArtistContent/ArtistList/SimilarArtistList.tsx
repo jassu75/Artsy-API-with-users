@@ -3,6 +3,7 @@ import { TypeArtistListDetails } from "../../UnauthorisedControls/unauthorizedCo
 import styles from "./similarArtistList.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import FavortiesIcon from "../../AuthorisedControls/FavoritesIcon";
+import EmptySimilarArtistList from "./EmptySimilarArtistlist";
 
 const SimilarArtistList = ({
   artistList,
@@ -24,33 +25,35 @@ const SimilarArtistList = ({
     <div className={styles.artists_list_container}>
       <h4 className={styles.similar_artists_heading}>Similar Artists</h4>
       <div className={styles.artist_list}>
-        {artistList && artistList.length !== 0
-          ? artistList.map((artistDetails) => (
-              <Card
-                key={artistDetails.id}
-                className={styles.artist_card}
-                onClick={() => handleCardClick(artistDetails.id)}
-              >
-                <Card.Img
-                  src={artistDetails.image}
-                  variant="top"
-                  className={styles.card_image}
-                />
+        {artistList.length > 0 ? (
+          artistList.map((artistDetails) => (
+            <Card
+              key={artistDetails.id}
+              className={styles.artist_card}
+              onClick={() => handleCardClick(artistDetails.id)}
+            >
+              <Card.Img
+                src={artistDetails.image}
+                variant="top"
+                className={styles.card_image}
+              />
 
-                <Card.ImgOverlay className={styles.image_overlay}>
-                  <FavortiesIcon
-                    parent={`similarArtistList`}
-                    artistId={artistDetails.id}
-                  />
-                </Card.ImgOverlay>
-                <Card.Body className={styles.card_body}>
-                  <Card.Title className={styles.card_title}>
-                    {artistDetails.title}
-                  </Card.Title>
-                </Card.Body>
-              </Card>
-            ))
-          : null}
+              <Card.ImgOverlay className={styles.image_overlay}>
+                <FavortiesIcon
+                  parent={`similarArtistList`}
+                  artistId={artistDetails.id}
+                />
+              </Card.ImgOverlay>
+              <Card.Body className={styles.card_body}>
+                <Card.Title className={styles.card_title}>
+                  {artistDetails.title}
+                </Card.Title>
+              </Card.Body>
+            </Card>
+          ))
+        ) : (
+          <EmptySimilarArtistList />
+        )}
       </div>
     </div>
   );
