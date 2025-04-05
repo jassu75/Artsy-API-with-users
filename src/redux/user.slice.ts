@@ -42,7 +42,7 @@ const userSlice = createSlice({
       }
     },
     setFavoriteList: (state, action) => {
-      if (state.favoritesList) {
+      if (action.payload) {
         state.favoritesList = action.payload.sort(
           (a: TypeFavorite, b: TypeFavorite) => {
             return (
