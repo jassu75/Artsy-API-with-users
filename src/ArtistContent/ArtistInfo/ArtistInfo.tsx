@@ -1,11 +1,17 @@
 import FavortiesIcon from "../../AuthorisedControls/FavoritesIcon";
-import { TypeArtistInfo } from "../../UnauthorisedControls/unauthorizedControl.types";
+import {
+  TypeArtistInfo,
+  TypeArtistListDetails,
+} from "../../UnauthorisedControls/unauthorizedControl.types";
+import SimilarArtistList from "../ArtistList/SimilarArtistList";
 import styles from "./artistInfo.module.css";
 
 const ArtistInfo = ({
+  similarArtistList,
   artistInfo,
   artistId,
 }: {
+  similarArtistList: TypeArtistListDetails[] | null;
   artistInfo: TypeArtistInfo;
   artistId: string;
 }) => {
@@ -26,6 +32,9 @@ const ArtistInfo = ({
           </p>
         ))}
       </div>
+      {similarArtistList && (
+        <SimilarArtistList artistList={similarArtistList} />
+      )}
     </div>
   );
 };

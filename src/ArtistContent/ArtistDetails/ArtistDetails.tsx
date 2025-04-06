@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useGetArtistInfo from "../../hooks/useGetArtistInfo";
 import useGetArtworks from "../../hooks/useGetArtworks";
 import useGetSimilarArtists from "../../hooks/useGetSimilarArtists";
-import SimilarArtistList from "../ArtistList/SimilarArtistList";
 import { useEffect, useState } from "react";
 
 const ArtistDetails = () => {
@@ -79,13 +78,14 @@ const ArtistDetails = () => {
       ) : (
         <>
           {artistInfo && activeTab === "artistInfo" && (
-            <ArtistInfo artistInfo={artistInfo} artistId={artistId} />
+            <ArtistInfo
+              similarArtistList={similarArtistList}
+              artistInfo={artistInfo}
+              artistId={artistId}
+            />
           )}
           {artworks && activeTab === "artWorks" && (
             <Artworks artworks={artworks} />
-          )}
-          {similarArtistList && (
-            <SimilarArtistList artistList={similarArtistList} />
           )}
         </>
       )}
