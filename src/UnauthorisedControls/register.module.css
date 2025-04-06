@@ -29,3 +29,11 @@
 .redirect_text {
   font-size: 12px;
 }
+
+.register_button {
+  background-color: #004383;
+}
+
+.disabled_button {
+  background-color: #5b80ae !important;
+}

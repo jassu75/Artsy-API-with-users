@@ -116,7 +116,11 @@ const Register = () => {
 
         <div className="d-grid pt-4">
           <Button
-            variant="secondary"
+            className={`${styles.register_button} ${
+              !(isValidFullname && isValidEmail && isValidPassword)
+                ? styles.disabled_button
+                : ""
+            }`}
             type="submit"
             size="sm"
             disabled={!(isValidFullname && isValidEmail && isValidPassword)}
