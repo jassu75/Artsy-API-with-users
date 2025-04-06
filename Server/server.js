@@ -2,7 +2,6 @@ import express from "express";
 import { getArtsyToken } from "./MiddleWare/getArtsyToken.js";
 import { getArtistList } from "./MiddleWare/getArtistList.js";
 import { getArtistInfo } from "./MiddleWare/getArtistInfo.js";
-import { getArtWorks } from "./MiddleWare/getArtworks.js";
 import { getCategory } from "./MiddleWare/getCategory.js";
 import "dotenv/config";
 import connectToDb from "./Database/connection.js";
@@ -12,11 +11,11 @@ import checkAuth from "./MiddleWare/checkAuth.js";
 import logout from "./MiddleWare/logout.js";
 import loginUser from "./Database/loginUser.js";
 import deleteUser from "./Database/deleteUser.js";
-import getSimilarArtists from "./MiddleWare/getSimilarArtists.js";
 import addUserFavorite from "./Database/addUserFavorite.js";
 import retrieveFavoriteList from "./Database/retrieveFavoriteList.js";
 import deleteUserFavorite from "./Database/deleteUserFavorite.js";
 import path from "path";
+import getArtistDetails from "./MiddleWare/getArtistDetails.js";
 
 const app = express();
 const buildFilePath = path.join(process.cwd(), "dist");
@@ -42,22 +41,23 @@ app.get("/api/search/:artistName", getArtsyToken, getArtistList, (req, res) => {
   return res.json(req.artistList);
 });
 
-//artistInfo
+//ArtistDetails
 
 app.get(
-  "/api/artistinfo/:artistId",
+  "/api/artistdetails/:artistId",
   getArtsyToken,
-  getArtistInfo,
+  checkAuth,
+  getArtistDetails,
   (req, res) => {
-    return res.json(req.artistInfo);
+    const result = {
+      artistInfo: req.artistInfo,
+      artWorks: req.artWorks,
+      similarArtistList: req.similarArtistList,
+    };
+
+    return res.status(200).json(result);
   }
 );
-
-//artworks
-
-app.get("/api/artworks/:artistId", getArtsyToken, getArtWorks, (req, res) => {
-  return res.json(req.artWorks);
-});
 
 //categories
 
@@ -128,20 +128,6 @@ app.get(
   }
 );
 
-app.get(
-  "/api/similarartists/:artistId",
-  getArtsyToken,
-  checkAuth,
-  getSimilarArtists,
-  (req, res) => {
-    const result = {
-      authenticated: req.isAuthenticated,
-      similarArtistList: req.similarArtistList,
-    };
-
-    return res.status(req.isAuthenticated ? 200 : 401).json(result);
-  }
-);
 app.post(
   "/api/adduserfavorite/:artistId",
   checkAuth,

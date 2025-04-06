@@ -55,7 +55,6 @@ const Login = () => {
             required
             type="email"
             placeholder="Enter Email"
-            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
             className={styles.form_input_field}
             autoComplete="email"
             name="email"

@@ -4,10 +4,8 @@ import ArtistInfo from "../ArtistInfo/ArtistInfo";
 import Artworks from "../Artworks/Artworks";
 import Spinner from "react-bootstrap/Spinner";
 import { useLocation, useNavigate } from "react-router-dom";
-import useGetArtistInfo from "../../hooks/useGetArtistInfo";
-import useGetArtworks from "../../hooks/useGetArtworks";
-import useGetSimilarArtists from "../../hooks/useGetSimilarArtists";
 import { useEffect, useState } from "react";
+import useGetArtistDetails from "../../hooks/useGetArtistDetails";
 
 const ArtistDetails = () => {
   const location = useLocation();
@@ -19,10 +17,8 @@ const ArtistDetails = () => {
   const [artistId, setArtistId] = useState<string | null>(
     queryParameters.get("artistid") || null
   );
-  const { artistInfo, artistInfoLoading } = useGetArtistInfo(artistId);
-  const { artworks, artworksLoading } = useGetArtworks(artistId);
-  const { similarArtistList, similarArtistLoading } =
-    useGetSimilarArtists(artistId);
+  const { artworks, similarArtistList, artistInfo, loading } =
+    useGetArtistDetails(artistId);
 
   const handleTabSelect = (eventKey: string | null) => {
     setActiveTab(eventKey || "artistInfo");
@@ -66,7 +62,7 @@ const ArtistDetails = () => {
         </Nav.Item>
       </Nav>
 
-      {artistInfoLoading || artworksLoading || similarArtistLoading ? (
+      {loading ? (
         <div className={styles.loading_container}>
           <Spinner
             role="status"
