@@ -167,5 +167,6 @@ app.post(
 );
 
 app.get("*", (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, must-revalidate');
   return res.sendFile(path.join(buildFilePath, "index.html"));
 });
