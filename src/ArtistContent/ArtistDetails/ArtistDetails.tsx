@@ -21,7 +21,6 @@ const ArtistDetails = () => {
     useGetArtistDetails(artistId);
 
   const handleTabSelect = (eventKey: string | null) => {
-    setActiveTab(eventKey || "artistInfo");
     queryParameters.set("activetab", eventKey || "artistInfo");
     const updatedUrl = `${location.pathname}?${queryParameters.toString()}`;
     navigate(updatedUrl, { replace: true });
@@ -29,6 +28,7 @@ const ArtistDetails = () => {
 
   useEffect(() => {
     setArtistId(queryParameters.get("artistid"));
+    setActiveTab(queryParameters.get("activetab") || "artistInfo");
   }, [location.search]);
 
   return artistId ? (
