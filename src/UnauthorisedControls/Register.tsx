@@ -92,7 +92,7 @@ const Register = () => {
             isValid={(isValidEmail || !error) && showEmailError}
           />
           <Form.Control.Feedback type="invalid">
-            {error ? "Email already exists" : "Email must be valid"}
+            {error ? "User with this email already exists" : "Email must be valid"}
           </Form.Control.Feedback>
         </Form.Group>
 
