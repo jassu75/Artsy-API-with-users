@@ -9,6 +9,9 @@ Once user creates an account, they can save their favorite artists for quick acc
 Implemented JWT based authentication to securely validate users. The auth expires after 1 hour
 Implemented a proxy server with Express and a backend database with MongoDB and mongoose
 
+## Skills
+**React**,**Express**,**MongoDB**,**NodeJS**,**Mongoose**,**Bootstrap**
+
 ## Directions
 
 ### Signup
