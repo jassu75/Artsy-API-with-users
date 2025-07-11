@@ -3,6 +3,9 @@
 ## Website Link
 [Visit the Application](https://tejas-artify-app.uw.r.appspot.com/)
 
+## Demo Link
+[Visit Youtube](https://youtu.be/hZvGzY5E1-M?si=FIedmv1pFYYayh9M)
+
 ## Introduction
 Users are able to discover their favorite artists world wide, explore their artworks, and browse related art by category through an interactive search interface. 
 Once user creates an account, they can save their favorite artists for quick access
