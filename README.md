@@ -1,4 +1,4 @@
-# 🌐 Artsy World Website
+# 🎨 Artsy World Website
 
 ## 🔗 Website Link  
 [Visit the Application](https://tejas-artify-app.uw.r.appspot.com/)
